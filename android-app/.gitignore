@@ -1,0 +1,15 @@
+*.iml
+.gradle/
+/local.properties
+.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+app/build/
+
+# Model/thu vien nang - khong dua len git, xem README trong app/libs va app/src/main/assets
+app/libs/*.aar
+app/src/main/assets/*.onnx

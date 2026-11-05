@@ -1,0 +1,29 @@
+<resources>
+    <!-- Brand / Primary Fire Spectrum -->
+    <color name="primary">#FF6B00</color>
+    <color name="primary_light">#FF9E3B</color>
+    <color name="primary_dark">#D83A00</color>
+    <color name="fire_red">#E52E10</color>
+    <color name="fire_amber">#FFB703</color>
+    <color name="fire_yellow">#FFD166</color>
+    <color name="fire_core_white">#FFF5EB</color>
+    
+    <!-- Obsidian Backgrounds -->
+    <color name="background">#070406</color>
+    <color name="surface_dark">#120B0F</color>
+    <color name="surface_glass">#1A1217</color>
+    <color name="surface_glass_stroke">#33FFFFFF</color>
+    <color name="surface_glass_fire_stroke">#4DFF7A1A</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#FFF6F0</color>
+    <color name="text_secondary">#B8A49C</color>
+    <color name="text_tertiary">#7D6D67</color>
+    <color name="text_accent">#FFA24C</color>
+
+    <!-- State Indicators -->
+    <color name="status_idle">#FF9E3B</color>
+    <color name="status_listening">#FF3B00</color>
+    <color name="status_thinking">#FFB703</color>
+    <color name="status_speaking">#FF5722</color>
+</resources>
