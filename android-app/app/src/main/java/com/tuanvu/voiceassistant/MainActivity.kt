@@ -1,8 +1,12 @@
 package com.tuanvu.voiceassistant
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tuanvu.voiceassistant.databinding.ActivityMainBinding
@@ -27,7 +31,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Bấm micro: chờ -> nghe; đang nghe -> xử lý -> nói -> chờ (chỉ để thử giao diện)
+        // Hiệu ứng xoay nhẹ lấp lánh cho biểu tượng sao AI trên thanh nhận diện
+        ObjectAnimator.ofFloat(binding.ivAiSparkle, View.ROTATION, 0f, 18f, -18f, 0f).apply {
+            duration = 4200
+            repeatCount = ValueAnimator.INFINITE
+            interpolator = AccelerateDecelerateInterpolator()
+            start()
+        }
+
+        // Đổi phong cách nhận diện 3D khi chạm vào viên thuốc thương hiệu hoặc sân khấu 3D
+        binding.aiStage.onStyleChanged = { style ->
+            binding.tvAiSub.text = "${style.tenHienThi} • Chạm đổi"
+        }
+        binding.pillAiIdentity.setOnClickListener {
+            binding.aiStage.nextStyle()
+        }
+
+        // Bấm micro: chờ -> nghe; đang nghe -> xử lý -> nói -> chờ
         binding.btnMic.setOnClickListener {
             when (trangThai) {
                 VoiceState.IDLE -> chuyen(VoiceState.LISTENING)
@@ -59,6 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun chuyen(s: VoiceState) {
         trangThai = s
+        binding.btnMic.state = s
+        binding.aiStage.state = s
 
         // Đồng hồ chỉ chạy khi đang nghe
         handler.removeCallbacks(demTime)
@@ -67,19 +89,38 @@ class MainActivity : AppCompatActivity() {
             capNhatDongHo()
             handler.postDelayed(demTime, 1000)
         }
+
+        val dangNghe = s == VoiceState.LISTENING
         binding.tvThoiGian.animate()
-            .alpha(if (s == VoiceState.LISTENING) 1f else 0f)
-            .setDuration(400).start()
+            .alpha(if (dangNghe) 1f else 0f)
+            .setDuration(320).start()
+
+        val tieuDe = when (s) {
+            VoiceState.IDLE -> "Tôi có thể giúp gì cho bạn?"
+            VoiceState.LISTENING -> ""
+            VoiceState.THINKING -> "Đang phân tích yêu cầu…"
+            VoiceState.SPEAKING -> "Hôm nay trời nắng đẹp, 31°C"
+        }
+        binding.tvTieuDeChinh.animate()
+            .alpha(0f)
+            .setDuration(150)
+            .withEndAction {
+                binding.tvTieuDeChinh.text = tieuDe
+                binding.tvTieuDeChinh.animate()
+                    .alpha(if (dangNghe) 0f else 1f)
+                    .setDuration(260)
+                    .start()
+            }.start()
 
         val chu = when (s) {
-            VoiceState.IDLE -> "Chạm micro để nói"
-            VoiceState.LISTENING -> "Đang nghe…"
-            VoiceState.THINKING -> "Đang xử lý…"
-            VoiceState.SPEAKING -> "Hôm nay trời nắng, 31 độ"
+            VoiceState.IDLE -> "Chạm micro để nói • Vuốt tâm 3D để xoay"
+            VoiceState.LISTENING -> "Đang lắng nghe giọng nói của bạn…"
+            VoiceState.THINKING -> "Hệ thống AI đang tổng hợp phản hồi"
+            VoiceState.SPEAKING -> "Đang phát phản hồi • Chạm X để dừng"
         }
-        binding.tvTrangThai.animate().alpha(0f).setDuration(180).withEndAction {
+        binding.tvTrangThai.animate().alpha(0f).setDuration(150).withEndAction {
             binding.tvTrangThai.text = chu
-            binding.tvTrangThai.animate().alpha(1f).setDuration(320).start()
+            binding.tvTrangThai.animate().alpha(1f).setDuration(280).start()
         }.start()
     }
 

@@ -4,8 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:clipChildren="false"
     android:fitsSystemWindows="true">
 
+    <!-- 1. THANH ĐẦU TRANG: Lịch sử - Nhận diện AI - Cài đặt -->
     <ImageButton
         android:id="@+id/btnLichSu"
         android:layout_width="44dp"
@@ -19,6 +21,62 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/text_primary" />
+
+    <!-- Viên thuốc nhận diện thương hiệu AI ở chính giữa đỉnh màn hình -->
+    <LinearLayout
+        android:id="@+id/pillAiIdentity"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:background="@drawable/bg_ai_pill"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="9dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/btnLichSu"
+        app:layout_constraintEnd_toStartOf="@id/btnCaiDat"
+        app:layout_constraintStart_toEndOf="@id/btnLichSu"
+        app:layout_constraintTop_toTopOf="@id/btnLichSu">
+
+        <FrameLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_ai_badge_circle">
+
+            <ImageView
+                android:id="@+id/ivAiSparkle"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_ai_sparkle" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvAiName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.02"
+                android:text="Aura AI"
+                android:textColor="@color/text_primary"
+                android:textSize="13.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAiSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lõi Lụa 3D • Chạm đổi"
+                android:textColor="@color/fire_amber"
+                android:textSize="10.5sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/btnCaiDat"
@@ -34,63 +92,100 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/text_primary" />
 
+    <!-- 2. SÂN KHẤU NHẬN DIỆN AI 3D ĐA CHIỀU Ở TRUNG TÂM -->
+    <com.tuanvu.voiceassistant.AiStageView
+        android:id="@+id/aiStage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@id/glDuoi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pillAiIdentity" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glDuoi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.50" />
+        app:layout_constraintGuide_percent="0.54" />
+
+    <!-- 3. TIÊU ĐỀ PHẢN HỒI AI & ĐỒNG HỒ THU ÂM -->
+    <TextView
+        android:id="@+id/tvTieuDeChinh"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:letterSpacing="0.01"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:text="Tôi có thể giúp gì cho bạn?"
+        android:textColor="@color/text_primary"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/glDuoi" />
 
     <TextView
         android:id="@+id/tvThoiGian"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:alpha="0"
         android:fontFamily="sans-serif-light"
         android:letterSpacing="0.1"
         android:text="00:00"
         android:textColor="@color/text_primary"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTieuDeChinh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/glDuoi" />
+        app:layout_constraintTop_toTopOf="@id/tvTieuDeChinh" />
 
     <TextView
         android:id="@+id/tvTrangThai"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        android:letterSpacing="0.04"
+        android:letterSpacing="0.03"
         android:paddingStart="28dp"
         android:paddingEnd="28dp"
-        android:text="Chạm micro để nói"
+        android:text="Chạm micro để nói • Vuốt tâm 3D để xoay"
         android:textColor="@color/text_secondary"
-        android:textSize="16sp"
+        android:textSize="14.5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvThoiGian" />
+        app:layout_constraintTop_toBottomOf="@id/tvTieuDeChinh" />
+
+    <!-- 4. KHU VỰC ĐIỀU KHIỂN MICRO & PHÍM CHỨC NĂNG ĐÁY -->
+    <View
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:background="@drawable/bg_bottom_glow"
+        app:layout_constraintBottom_toBottomOf="@id/micFrame"
+        app:layout_constraintEnd_toEndOf="@id/micFrame"
+        app:layout_constraintStart_toStartOf="@id/micFrame"
+        app:layout_constraintTop_toTopOf="@id/micFrame" />
 
     <FrameLayout
         android:id="@+id/micFrame"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_marginBottom="12dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
+        <com.tuanvu.voiceassistant.MicButton
             android:id="@+id/btnMic"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_glass_circle"
             android:contentDescription="Nói chuyện với trợ lý"
-            android:padding="22dp"
-            android:src="@drawable/ic_mic"
-            app:tint="@color/text_primary" />
+            android:padding="84dp"
+            android:src="@drawable/ic_mic" />
     </FrameLayout>
 
     <ImageButton
